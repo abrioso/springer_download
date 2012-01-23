@@ -83,6 +83,7 @@ def main(argv):
 
     bookTitle = ""
     coverLink = ""
+    isbn = hash
 
     front_matter = False
 
@@ -134,6 +135,12 @@ def main(argv):
                 error("could not transliterate book title %s" % bookTitle)
             if os.path.isfile(bookTitlePath):
                 error("%s already downloaded" % bookTitlePath)
+
+            bookISBNPath = curDir + "/%s" % sanitizeFilename(isbn)
+            if bookISBNPath == "":
+                error("could not transliterate book ISBN %s" % isbn)
+            if os.path.isfile(bookISBNPath):
+                error("%s already downloaded" % bookISBNPath)
 
             print "\nNow Trying to download book '%s'\n" % bookTitle
             #error("foo")
@@ -214,7 +221,8 @@ def main(argv):
         print "book %s was successfully downloaded, it was saved to %s" % (bookTitle, bookTitlePath)
         log("downloaded %s chapters (%.2fMiB) of %s\n" % (len(chapters),  os.path.getsize(bookTitlePath)/2.0**20, bookTitle))
     else: #HL: if merge=False
-        print "book %s was successfully downloaded, unmerged chapters can be found in %s" % (bookTitle, tempDir)
+        shutil.move(tempDir, bookISBNPath)
+        print "book %s was successfully downloaded, unmerged chapters can be found in %s" % (bookTitle, bookISBNPath)
         log("downloaded %s chapters of %s\n" % (len(chapters), bookTitle))
 
     sys.exit()
