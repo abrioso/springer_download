@@ -3,3 +3,8 @@
 - add -c switch to arguments (list of chapters, with ranges, i.e.: -c 1,4,13-25
 - use progress bar when downloading sources
 - use multithreading for simultanieous downloads
+
+- add -cd switch for clear-double pages in merged books
+- get ISBN when it's different of hash
+- add -ot and -oi switches for title or ISBN output, respectively
+
